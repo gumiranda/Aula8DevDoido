@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   card: {marginVertical: MARGIN, alignSelf: 'center'},
 });
 
-const CreditCard = ({cardNumber, y, index, brand, name}) => {
+const CreditCard = ({cardNumber, y, index, brand, name, _id, onPress}) => {
   const position = Animated.subtract(index * CARD_HEIGHT, y);
   const isDisappearing = -CARD_HEIGHT;
   const isTop = 0;
@@ -48,7 +48,7 @@ const CreditCard = ({cardNumber, y, index, brand, name}) => {
     <Animated.View
       style={[styles.card, {opacity, transform: [{translateY}, {scale}]}]}
       key={index}>
-      <Card {...{cardNumber, brand, name}} />
+      <Card {...{cardNumber, brand, name, _id, onPress}} />
     </Animated.View>
   );
 };

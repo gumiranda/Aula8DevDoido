@@ -9,9 +9,7 @@ export const Title = styled.Text`
   align-self: center;
   margin-vertical: 15px;
 `;
-
 export const SubmitButton = styled(Button)`
   margin-horizontal: 35px;
-  margin-vertical: 15px;
-  border-radius: 20px;
+  border-radius: 4px;
 `;

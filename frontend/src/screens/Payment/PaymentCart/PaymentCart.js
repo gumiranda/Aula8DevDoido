@@ -3,9 +3,11 @@ import CryptoJS from 'react-native-crypto-js';
 import {CreditCardInput} from 'react-native-credit-card-input';
 import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {addDays, format} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import api from '../../../services/api';
 import {completeProfileRequest} from '../../../appStore/appModules/user/actions';
-import {Container, SubmitButton, Title} from './styles';
+import {SubmitButton, Title} from './styles';
 import Background from '../../../components/Background/Background';
 import {getRequest} from '../../../appStore/appModules/creditcard/list';
 
@@ -16,9 +18,10 @@ export default function PaymentCart({navigation}) {
   const profile = useSelector(state => state.user.profile);
   async function handleSubmit() {
     if (isValid) {
+      // eslint-disable-next-line radix
       let expiration = parseInt(cart.expiry.replace('/', ''));
       if (expiration < 1000) {
-        expiration = '0' + expiration;
+        expiration = `0${expiration}`;
       }
       console.tron.log(expiration);
       const numbercart = cart.number.toString().replace(/\s+/g, '');
@@ -57,13 +60,21 @@ export default function PaymentCart({navigation}) {
       try {
         const response = await api.post('transaction', obj);
         if (response.data) {
-          Alert.alert(
-            'Pagamento feito com sucesso',
-            'Seu acesso à plataforma do faustão ta liberado',
-          );
           dispatch(getRequest());
           dispatch(completeProfileRequest({cpf, phone}));
-          //navigation.navigate('CardList');
+          const today = new Date().getTime();
+          const dataCalculada = addDays(today, 30);
+          const dateSignatureValid = format(
+            new Date(new Date(dataCalculada)).getTime(),
+            "dd 'de' MMMM 'de' yyyy",
+            {
+              locale: pt,
+            },
+          );
+          Alert.alert(
+            'Pagamento feito com sucesso',
+            `Seu acesso à plataforma está válido até ${dateSignatureValid}`,
+          );
           navigation.navigate('Home');
         }
       } catch (e) {
@@ -101,12 +112,10 @@ export default function PaymentCart({navigation}) {
           getForm(form);
         }}
       />
-      <Container>
-        <Title>Total: R$30</Title>
-        <SubmitButton onPress={() => handleSubmit()}>
-          Confirmar pagamento
-        </SubmitButton>
-      </Container>
+      <Title>Total: R$30</Title>
+      <SubmitButton onPress={() => handleSubmit()}>
+        Confirmar pagamento
+      </SubmitButton>
     </Background>
   );
 }

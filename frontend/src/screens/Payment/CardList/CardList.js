@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ActivityIndicator} from 'react-native';
+import {format} from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import {Title, SubmitButton} from './styles';
 import Background from '../../../components/Background/Background';
 import CreditCardList from '../../../components/CreditCardList/CreditCardList';
@@ -15,6 +17,15 @@ export default function CardList({navigation}) {
   const dispatch = useDispatch();
   const cards = useSelector(state => state.creditcard.cards);
   const profile = useSelector(state => state.user.profile);
+  const dateFormatted = useMemo(() => {
+    return format(
+      new Date(new Date(profile.payDay)).getTime(),
+      "dd 'de' MMMM 'de' yyyy",
+      {
+        locale: pt,
+      },
+    );
+  }, [profile.payDay]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     dispatch(getRequest());
@@ -38,7 +49,9 @@ export default function CardList({navigation}) {
       navigation.navigate('CompleteRegister');
     }
   };
-
+  const onPress = (_id, brand, cardNumber, name) => {
+    navigation.push('CheckoutEasy', {card_id: _id, brand, cardNumber, name});
+  };
   return (
     <Background>
       <Title>Pagamento</Title>
@@ -50,7 +63,8 @@ export default function CardList({navigation}) {
           ? 'Adicionar novo cartão'
           : 'Adicionar outro cartão'}
       </SubmitButton>
-      <CreditCardList cards={cards} />
+      <CreditCardList onPress={onPress} cards={cards} />
+      <Title>Assinatura válida até {dateFormatted}</Title>
     </Background>
   );
 }

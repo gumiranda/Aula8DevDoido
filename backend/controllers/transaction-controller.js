@@ -25,7 +25,7 @@ transactionController.prototype.post = async (req, res) => {
     if (data.card_id) {
       const card = await _repoCard.getById(data.card_id);
       const pagarmeTransaction = await client.transactions.create({
-        amount: 1,
+        amount: 6000,
         payment_method: 'credit_card',
         card_id: card.card_id,
         customer: {

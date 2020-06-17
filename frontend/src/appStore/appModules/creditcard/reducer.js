@@ -13,12 +13,16 @@ export default function creditcard(state = INITIAL_STATE, action) {
         break;
       }
       case '@creditcard/GET_REQUEST': {
+        draft.haveCard = false;
         break;
       }
       case '@creditcard/GET_FAILURE': {
+        draft.haveCard = false;
         break;
       }
       case '@auth/SIGN_OUT': {
+        draft.haveCard = false;
+        draft.cards = [];
         break;
       }
       default:

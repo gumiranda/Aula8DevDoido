@@ -12,6 +12,7 @@ import Profile from '../../screens/Profile/Profile';
 import Home from '../../screens/Home/Home';
 import PaymentAddress from '../../screens/Payment/PaymentAddress/PaymentAddress';
 import PaymentCart from '../../screens/Payment/PaymentCart/PaymentCart';
+import CheckoutEasy from '../../screens/Payment/CheckoutEasy/CheckoutEasy';
 import CardList from '../../screens/Payment/CardList/CardList';
 import CompleteRegister from '../../screens/Payment/CompleteRegister/CompleteRegister';
 import {appColors} from '../../utils/appColors';
@@ -48,6 +49,7 @@ const RootStack = createDrawerNavigator(
         CardList,
         PaymentAddress,
         PaymentCart,
+        CheckoutEasy,
       }),
       navigationOptions: () => ({drawerLabel: 'Pagamento'}),
     },

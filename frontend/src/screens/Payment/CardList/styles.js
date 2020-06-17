@@ -8,6 +8,7 @@ export const Title = styled.Text`
   font-weight: bold;
   align-self: center;
   margin-vertical: 15px;
+  margin-horizontal: 10px;
 `;
 export const SubmitButton = styled(Button)`
   margin-horizontal: 35px;

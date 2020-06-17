@@ -5,13 +5,12 @@ import {getSuccess, getFailure} from './list';
 export function* getCards() {
   try {
     const response = yield call(api.get, 'card');
-    if (response.data) {
+    if (response.data && response.data.length > 0) {
       yield put(getSuccess(response.data));
     } else {
       yield put(getFailure());
     }
   } catch (err) {
-    console.tron.log(err);
     yield put(getFailure());
   }
 }
