@@ -8,7 +8,7 @@ const yScreen = Dimensions.get('screen').height;
 const appMetrics = {
   DEVICE_WIDTH: x,
   SCREEN_WIDTH: xScreen,
-  DEVICE_HEIGTH: y,
+  DEVICE_HEIGHT: y,
   SCREEN_HEIGHT: yScreen,
 };
 

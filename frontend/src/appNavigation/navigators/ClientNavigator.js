@@ -12,15 +12,17 @@ import Profile from '../../screens/Profile/Profile';
 import Home from '../../screens/Home/Home';
 import PaymentAddress from '../../screens/Payment/PaymentAddress/PaymentAddress';
 import PaymentCart from '../../screens/Payment/PaymentCart/PaymentCart';
+import CardList from '../../screens/Payment/CardList/CardList';
 import CompleteRegister from '../../screens/Payment/CompleteRegister/CompleteRegister';
 import {appColors} from '../../utils/appColors';
+import Background from '../../components/Background/Background';
 
 function Logout() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(signOut());
-  }, []);
-  return <></>;
+  }, [dispatch]);
+  return <Background />;
 }
 
 const RootStack = createDrawerNavigator(
@@ -43,6 +45,7 @@ const RootStack = createDrawerNavigator(
     },
     Payment: {
       screen: createStackNavigator({
+        CardList,
         PaymentAddress,
         PaymentCart,
       }),
@@ -55,7 +58,7 @@ const RootStack = createDrawerNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'float',
+    headerMode: 'screen',
     navigationOptions: ({navigation}) => ({
       headerBackground: () => (
         <LinearGradient
@@ -65,7 +68,6 @@ const RootStack = createDrawerNavigator(
       ),
       headerTintColor: appColors.white,
       title: 'Dev Doido',
-      gesturesEnabled: true,
       headerLeft: () => (
         <Icon
           style={{padding: 10, color: appColors.white}}

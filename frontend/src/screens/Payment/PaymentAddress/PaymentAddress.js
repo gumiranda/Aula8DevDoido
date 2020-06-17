@@ -24,6 +24,7 @@ const formSchema = Yup.object().shape({
 export default function PaymentAddress({navigation}) {
   const profile = useSelector(state => state.user.profile);
   const loading = useSelector(state => state.user.loading);
+
   const initialValues = {
     zipcode: '',
     state: '',
@@ -52,16 +53,20 @@ export default function PaymentAddress({navigation}) {
         street_number,
         complemento,
       } = values;
-
-      navigation.push('PaymentCart', {
-        zipcode,
-        state,
-        street,
-        city,
-        neighborhood,
-        street_number,
-        complemento,
-      });
+      if (profile.cpf && profile.phone) {
+        navigation.navigate('PaymentCart', {
+          zipcode,
+          state,
+          street,
+          city,
+          neighborhood,
+          street_number,
+          complemento,
+        });
+      } else {
+        Alert.alert('Antes de prosseguir é necessário completar o cadastro');
+        navigation.navigate('CompleteRegister');
+      }
     }
   };
 

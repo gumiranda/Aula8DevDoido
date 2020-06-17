@@ -5,6 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import {createLogger} from 'redux-logger';
 import auth from './appModules/auth/reducer';
 import user from './appModules/user/reducer';
+import creditcard from './appModules/creditcard/reducer';
 import appSagas from './appSagas';
 
 const sagaMonitor = __DEV__ ? console.tron.createSagaMonitor() : null;
@@ -21,7 +22,7 @@ const persistConfig = {
   whitelist: ['auth', 'user'],
 };
 
-const rootReducer = combineReducers({auth, user});
+const rootReducer = combineReducers({auth, user, creditcard});
 const appStore = createStore(
   persistReducer(persistConfig, rootReducer),
   enhancer,

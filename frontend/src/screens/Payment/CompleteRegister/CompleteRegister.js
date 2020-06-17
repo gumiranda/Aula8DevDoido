@@ -23,6 +23,8 @@ export default function CompleteRegister({navigation}) {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
   const loading = useSelector(state => state.user.loading);
+  const cards = useSelector(state => state.creditcard.cards);
+
   const initialValues = {phone: profile?.phone, cpf: profile?.cpf};
   function TestaCPF(strCPF) {
     let Soma;
@@ -63,7 +65,11 @@ export default function CompleteRegister({navigation}) {
         dispatch(completeProfileRequest({cpf, phone: phoneFormatted}));
         if (new Date(profile.payDay).getTime() < new Date().getTime()) {
           if (!loading) {
-            navigation.push('PaymentAddress');
+            if (cards && cards.length > 0) {
+              navigation.navigate('CardList');
+            } else {
+              navigation.navigate('PaymentAddress');
+            }
           }
         }
       }

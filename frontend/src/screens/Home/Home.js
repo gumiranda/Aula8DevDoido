@@ -14,6 +14,7 @@ export default function Home({navigation}) {
       }
     }
   }, [navigation, profile.cpf, profile.payDay, profile.phone]);
+  //
 
   return (
     <Background>

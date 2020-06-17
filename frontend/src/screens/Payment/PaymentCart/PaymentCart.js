@@ -7,6 +7,7 @@ import api from '../../../services/api';
 import {completeProfileRequest} from '../../../appStore/appModules/user/actions';
 import {Container, SubmitButton, Title} from './styles';
 import Background from '../../../components/Background/Background';
+import {getRequest} from '../../../appStore/appModules/creditcard/list';
 
 export default function PaymentCart({navigation}) {
   const dispatch = useDispatch();
@@ -60,7 +61,9 @@ export default function PaymentCart({navigation}) {
             'Pagamento feito com sucesso',
             'Seu acesso à plataforma do faustão ta liberado',
           );
+          dispatch(getRequest());
           dispatch(completeProfileRequest({cpf, phone}));
+          //navigation.navigate('CardList');
           navigation.navigate('Home');
         }
       } catch (e) {

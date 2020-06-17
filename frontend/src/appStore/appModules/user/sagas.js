@@ -51,7 +51,6 @@ export function* completeProfile({payload}) {
       Alert.alert('Erro', response.data.message);
       yield put(updateProfileFailure());
     } else if (response.data) {
-      Alert.alert('Sucesso', 'Perfil atualizado com sucesso');
       yield put(updateProfileSuccess(response.data));
     } else {
       Alert.alert('Erro', 'Confira seus dados');
