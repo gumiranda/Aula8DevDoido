@@ -15,7 +15,6 @@ export const Container = styled.SafeAreaView`
   color: ${appColors.white};
   font-weight: bold;
   align-self: center;
-  margin-top: 30px;
 `;
 export const Form = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,

@@ -3,8 +3,6 @@ import CryptoJS from 'react-native-crypto-js';
 import {CreditCardInput} from 'react-native-credit-card-input';
 import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {addDays, format} from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import api from '../../../services/api';
 import {completeProfileRequest} from '../../../appStore/appModules/user/actions';
 import {SubmitButton, Title} from './styles';
@@ -15,6 +13,8 @@ export default function PaymentCart({navigation}) {
   const dispatch = useDispatch();
   const [isValid, setIsValid] = useState(false);
   const [cart, setCart] = useState({});
+  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const profile = useSelector(state => state.user.profile);
   async function handleSubmit() {
     if (isValid) {
@@ -58,26 +58,23 @@ export default function PaymentCart({navigation}) {
         street_number,
       };
       try {
-        const response = await api.post('transaction', obj);
-        if (response.data) {
-          dispatch(getRequest());
-          dispatch(completeProfileRequest({cpf, phone}));
-          const today = new Date().getTime();
-          const dataCalculada = addDays(today, 30);
-          const dateSignatureValid = format(
-            new Date(new Date(dataCalculada)).getTime(),
-            "dd 'de' MMMM 'de' yyyy",
-            {
-              locale: pt,
-            },
-          );
-          Alert.alert(
-            'Pagamento feito com sucesso',
-            `Seu acesso à plataforma está válido até ${dateSignatureValid}`,
-          );
-          navigation.navigate('Home');
+        if (count === 0) {
+          setLoading(true);
+          const response = await api.post('transaction', obj);
+          if (response.data) {
+            dispatch(getRequest());
+            dispatch(completeProfileRequest({cpf, phone}));
+            Alert.alert(
+              'Pagamento feito com sucesso',
+              `Seu acesso à plataforma está liberado`,
+            );
+            setCount(prev => prev + 1);
+            setLoading(false);
+            navigation.navigate('CardList', {goToHome: true});
+          }
         }
       } catch (e) {
+        setLoading(false);
         Alert.alert('Erro', 'Pagamento falhou');
       }
     }
@@ -113,7 +110,7 @@ export default function PaymentCart({navigation}) {
         }}
       />
       <Title>Total: R$30</Title>
-      <SubmitButton onPress={() => handleSubmit()}>
+      <SubmitButton loading={loading} onPress={() => handleSubmit()}>
         Confirmar pagamento
       </SubmitButton>
     </Background>

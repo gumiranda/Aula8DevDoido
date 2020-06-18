@@ -31,11 +31,13 @@ export default function CardList({navigation}) {
     dispatch(getRequest());
   }, [dispatch]);
   useEffect(() => {
-    if (cards.length > 0) {
+    if (navigation.getParam('goToHome')) {
+      navigation.navigate('Home');
+    } else if (cards.length > 0) {
       navigation.navigate('CardList');
       setLoading(false);
     } else if (profile.cpf && profile.phone) {
-      navigation.navigate('PaymentAddressPayment');
+      navigation.navigate('PaymentAddress');
       setLoading(false);
     } else {
       navigation.navigate('CompleteRegister');
@@ -50,7 +52,9 @@ export default function CardList({navigation}) {
     }
   };
   const onPress = (_id, brand, cardNumber, name) => {
-    navigation.push('CheckoutEasy', {card_id: _id, brand, cardNumber, name});
+    if (new Date(profile.payDay).getTime() < new Date().getTime()) {
+      navigation.push('CheckoutEasy', {card_id: _id, brand, cardNumber, name});
+    }
   };
   return (
     <Background>
@@ -58,13 +62,21 @@ export default function CardList({navigation}) {
       {loading ? (
         <ActivityIndicator size="large" color={appColors.white} />
       ) : null}
-      <SubmitButton onPress={() => addCard()}>
-        {cards && cards.length === 0
-          ? 'Adicionar novo cartão'
-          : 'Adicionar outro cartão'}
-      </SubmitButton>
+      {new Date(profile.payDay).getTime() < new Date().getTime() ? (
+        <SubmitButton
+          textColor={appColors.white}
+          color={appColors.primary}
+          onPress={() => addCard()}>
+          {cards && cards.length === 0
+            ? 'Adicionar novo cartão'
+            : 'Pagar com outro cartão'}
+        </SubmitButton>
+      ) : null}
+
       <CreditCardList onPress={onPress} cards={cards} />
-      <Title>Assinatura válida até {dateFormatted}</Title>
+      <Title style={{marginHorizontal: 20, fontSize: 12}}>
+        Assinatura válida até {dateFormatted}
+      </Title>
     </Background>
   );
 }

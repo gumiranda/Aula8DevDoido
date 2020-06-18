@@ -59,7 +59,7 @@ export default function CompleteRegister({navigation}) {
         cpf.replace('.', '').replace('.', '').replace('-', ''),
       );
       if (!teste) {
-        Alert.alert('CPF inválido');
+        Alert.alert('Erro', 'CPF inválido');
       }
       if (isValid && teste) {
         dispatch(completeProfileRequest({cpf, phone: phoneFormatted}));
@@ -68,7 +68,7 @@ export default function CompleteRegister({navigation}) {
             if (cards && cards.length > 0) {
               navigation.navigate('CardList');
             } else {
-              navigation.navigate('PaymentAddress');
+              navigation.navigate('RegPaymentAddress', {goToAddress: true});
             }
           }
         }

@@ -28,6 +28,6 @@ export const SubmitButton = styled(Button)`
 `;
 export const Separator = styled.View`
   height: 1px;
-  background: ${appColors.black};
+  background: ${appColors.white};
   margin: 20px 0 30px;
 `;
