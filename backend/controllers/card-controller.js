@@ -7,7 +7,12 @@ const validation = require('../bin/helpers/validation');
 function cardController() {}
 
 cardController.prototype.get = async (req, res) => {
-  ctrlBase.getMyAll(_repo, req, res);
+  try {
+    const cards = await _repo.getMyAll(req.usuarioLogado.user._id);
+    res.status(200).send(cards);
+  } catch (e) {
+    res.status(500).send({ message: 'Internal server error', error: e });
+  }
 };
 cardController.prototype.delete = async (req, res) => {
   ctrlBase.delete(_repo, req, res);

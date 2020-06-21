@@ -53,7 +53,7 @@ transactionController.prototype.post = async (req, res) => {
           {
             id: '1',
             title: 'Parcela mensal do aplicativo do dev doido',
-            unit_price: 30,
+            unit_price: data.value ? data.value : 30,
             quantity: 1,
             tangible: true,
           },
@@ -119,7 +119,7 @@ transactionController.prototype.post = async (req, res) => {
           {
             id: '1',
             title: 'Parcela mensal do aplicativo do dev doido',
-            unit_price: 30,
+            unit_price: data.value ? data.value : 30,
             quantity: 1,
             tangible: true,
           },

@@ -4,10 +4,11 @@ const base = require('../bin/base/repository-base');
 class cardRepository {
   constructor() {
     this._base = new base('Card');
+    this._projection = 'name cardNumber brand ';
   }
 
   async getMyAll(user) {
-    return await this._base.getMyAll(user);
+    return await this._base._model.find({ userId: user }, this._projection);
   }
 
   async getById(id) {
