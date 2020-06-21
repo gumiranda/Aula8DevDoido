@@ -9,9 +9,15 @@ export const Title = styled.Text`
   align-self: center;
   margin-vertical: 15px;
 `;
+export const Container = styled.SafeAreaView`
+  font-size: 20px;
+  color: ${appColors.white};
+  font-weight: bold;
+  align-self: center;
+`;
 
 export const SubmitButton = styled(Button)`
-  margin-horizontal: 35px;
   margin-vertical: 15px;
+  margin-horizontal: 35px;
   border-radius: 20px;
 `;

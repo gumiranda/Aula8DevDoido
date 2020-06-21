@@ -5,9 +5,9 @@ import {Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import api from '../../../services/api';
 import {completeProfileRequest} from '../../../appStore/appModules/user/actions';
-import {SubmitButton, Title} from './styles';
-import Background from '../../../components/Background/Background';
 import {getRequest} from '../../../appStore/appModules/creditcard/list';
+import {Container, SubmitButton, Title} from './styles';
+import Background from '../../../components/Background/Background';
 
 export default function PaymentCart({navigation}) {
   const dispatch = useDispatch();
@@ -15,13 +15,13 @@ export default function PaymentCart({navigation}) {
   const [cart, setCart] = useState({});
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
+
   const profile = useSelector(state => state.user.profile);
   async function handleSubmit() {
     if (isValid) {
-      // eslint-disable-next-line radix
       let expiration = parseInt(cart.expiry.replace('/', ''));
       if (expiration < 1000) {
-        expiration = `0${expiration}`;
+        expiration = '0' + expiration;
       }
       console.tron.log(expiration);
       const numbercart = cart.number.toString().replace(/\s+/g, '');
@@ -42,6 +42,7 @@ export default function PaymentCart({navigation}) {
       const city = navigation.getParam('city');
       const zipcode = navigation.getParam('zipcode').replace('-', '');
       const neighborhood = navigation.getParam('neighborhood');
+      const value = navigation.getParam('value');
       const {cpf, phone, email} = profile;
       const obj = {
         city,
@@ -56,6 +57,7 @@ export default function PaymentCart({navigation}) {
         cpf,
         phone,
         street_number,
+        value,
       };
       try {
         if (count === 0) {
@@ -64,9 +66,10 @@ export default function PaymentCart({navigation}) {
           if (response.data) {
             dispatch(getRequest());
             dispatch(completeProfileRequest({cpf, phone}));
+
             Alert.alert(
               'Pagamento feito com sucesso',
-              `Seu acesso à plataforma está liberado`,
+              'Seu acesso à plataforma do faustão ta liberado',
             );
             setCount(prev => prev + 1);
             setLoading(false);
@@ -109,10 +112,12 @@ export default function PaymentCart({navigation}) {
           getForm(form);
         }}
       />
-      <Title>Total: R$30</Title>
-      <SubmitButton loading={loading} onPress={() => handleSubmit()}>
-        Confirmar pagamento
-      </SubmitButton>
+    
+        <Title>Total: R${navigation.getParam('value')}</Title>
+        <SubmitButton loading={loading} onPress={() => handleSubmit()}>
+          Confirmar pagamento
+        </SubmitButton>
+      
     </Background>
   );
 }

@@ -14,16 +14,17 @@ export default function CheckoutEasy({navigation}) {
   const profile = useSelector(state => state.user.profile);
   async function handleSubmit() {
     const card_id = navigation.getParam('card_id');
+    const value = navigation.getParam('value');
     try {
       if (count === 0) {
         setLoading(true);
-        const response = await api.post('transaction', {card_id});
+        const response = await api.post('transaction', {card_id, value});
         if (response.data) {
           const {cpf, phone} = profile;
           dispatch(completeProfileRequest({cpf, phone}));
           Alert.alert(
             'Pagamento feito com sucesso',
-            `Seu acesso à plataforma está liberado`,
+            'Seu acesso à plataforma está liberado',
           );
           setLoading(false);
           setCount(prev => prev + 1);
@@ -32,10 +33,10 @@ export default function CheckoutEasy({navigation}) {
       }
     } catch (e) {
       setLoading(false);
-      //console.tron.log(e.toString());
       Alert.alert('Erro', 'Pagamento falhou');
     }
   }
+
   return (
     <Background>
       <Title>Detalhes do pagamento</Title>
@@ -51,7 +52,7 @@ export default function CheckoutEasy({navigation}) {
           number={navigation.getParam('cardNumber')}
         />
       </View>
-      <Title>Total: R$30</Title>
+      <Title>Total: R${navigation.getParam('value')}</Title>
       <SubmitButton loading={loading} onPress={() => handleSubmit()}>
         Confirmar pagamento
       </SubmitButton>

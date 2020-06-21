@@ -6,17 +6,18 @@ import {darken} from 'polished';
 import {useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {createDrawerNavigator} from 'react-navigation-drawer';
+import appMetrics from '../../utils/appMetrics';
 import {signOut} from '../../appStore/appModules/auth/actions';
 import Profile from '../../screens/Profile/Profile';
 import Home from '../../screens/Home/Home';
 import PaymentAddress from '../../screens/Payment/PaymentAddress/PaymentAddress';
 import PaymentCart from '../../screens/Payment/PaymentCart/PaymentCart';
-import CheckoutEasy from '../../screens/Payment/CheckoutEasy/CheckoutEasy';
-import CardList from '../../screens/Payment/CardList/CardList';
 import CompleteRegister from '../../screens/Payment/CompleteRegister/CompleteRegister';
 import {appColors} from '../../utils/appColors';
+import Plans from '../../screens/Payment/Plans/Plans';
+import CheckoutEasy from '../../screens/Payment/CheckoutEasy/CheckoutEasy';
+import CardList from '../../screens/Payment/CardList/CardList';
 import Background from '../../components/Background/Background';
-import appMetrics from '../../utils/appMetrics';
 
 function Logout() {
   const dispatch = useDispatch();
@@ -42,13 +43,13 @@ const RootStack = createDrawerNavigator(
           CompleteRegister,
           RegPaymentAddress: {screen: PaymentAddress},
           RegPaymentCart: {screen: PaymentCart},
+          RegPlans: {screen: Plans},
         },
         {
           initialRouteName: 'CompleteRegister',
           defaultNavigationOptions: {
             headerTransparent: true,
-            headerBackTitleVisible: true,
-            headerTintColor: '#FFF',
+            headerTintColor: appColors.white,
             headerLeftContainerStyle: {
               marginLeft: 0,
             },
@@ -64,13 +65,15 @@ const RootStack = createDrawerNavigator(
           PaymentAddress,
           PaymentCart,
           CheckoutEasy,
+          Plans,
         },
         {
           initialRouteName: 'CardList',
+
           defaultNavigationOptions: {
             headerTransparent: true,
-            headerBackTitleVisible: true,
-            headerTintColor: '#FFF',
+
+            headerTintColor: appColors.white,
             headerLeftContainerStyle: {
               marginLeft: 0,
             },
@@ -86,7 +89,7 @@ const RootStack = createDrawerNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'screen',
+    headerMode: 'float',
     navigationOptions: ({navigation}) => ({
       headerBackground: () => (
         <LinearGradient
@@ -96,18 +99,17 @@ const RootStack = createDrawerNavigator(
       ),
       headerTintColor: appColors.white,
       title: 'Dev Doido',
+
       headerLeft: () => (
-        
-          <Icon
-            style={{padding: 10, color: appColors.white}}
-            name="three-bars"
-            size={30}
-            color={appColors.black}
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}
-          />
-        
+        <Icon
+          style={{padding: 10, color: appColors.white}}
+          name="three-bars"
+          size={30}
+          color={appColors.black}
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        />
       ),
       headerTitleStyle: {
         paddingLeft: appMetrics.DEVICE_WIDTH / 5.5,

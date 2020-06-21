@@ -1,9 +1,7 @@
 import produce from 'immer';
 
-const INITIAL_STATE = {
-  cards: [],
-  haveCard: false,
-};
+const INITIAL_STATE = {cards: [], haveCard: false};
+
 export default function creditcard(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
@@ -12,11 +10,11 @@ export default function creditcard(state = INITIAL_STATE, action) {
         draft.haveCard = true;
         break;
       }
-      case '@creditcard/GET_REQUEST': {
+      case '@creditcard/GET_FAILURE': {
         draft.haveCard = false;
         break;
       }
-      case '@creditcard/GET_FAILURE': {
+      case '@creditcard/GET_REQUEST': {
         draft.haveCard = false;
         break;
       }

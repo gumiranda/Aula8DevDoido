@@ -24,7 +24,6 @@ const formSchema = Yup.object().shape({
 export default function PaymentAddress({navigation}) {
   const profile = useSelector(state => state.user.profile);
   const loading = useSelector(state => state.user.loading);
-
   const initialValues = {
     zipcode: '',
     state: '',
@@ -46,8 +45,7 @@ export default function PaymentAddress({navigation}) {
     if (isValid) {
       if (new Date(profile.payDay).getTime() > new Date().getTime()) {
         Alert.alert('Erro', 'Sua assinatura já está paga');
-        navigation.navigate('Home');
-      } else {
+navigation.navigate('Home');      } else {
         const {
           zipcode,
           state,
@@ -57,7 +55,6 @@ export default function PaymentAddress({navigation}) {
           street_number,
           complemento,
         } = values;
-
         if (profile.cpf && profile.phone) {
           if (
             initialValues.zipcode === zipcode ||
@@ -73,7 +70,8 @@ export default function PaymentAddress({navigation}) {
               'Preencha os valores corretamente para prosseguir',
             );
           } else {
-            navigation.navigate('PaymentCart', {
+            const value = navigation.getParam('value');
+            navigation.push('PaymentCart', {
               zipcode,
               state,
               street,
@@ -81,6 +79,7 @@ export default function PaymentAddress({navigation}) {
               neighborhood,
               street_number,
               complemento,
+              value,
             });
           }
         } else {
@@ -91,8 +90,6 @@ export default function PaymentAddress({navigation}) {
           navigation.navigate('CompleteRegister');
         }
       }
-    } else {
-      Alert.alert('Erro', 'Preencha os valores corretamente para prosseguir');
     }
   };
 

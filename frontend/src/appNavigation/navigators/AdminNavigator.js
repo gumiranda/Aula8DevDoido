@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import Profile from '../../screens/Profile/Profile';
-import {appColors} from '../../utils/appColors';
+import appColors from '../../utils/appColors';
 
 const drawerButton = navigation => (
   <Icon

@@ -24,13 +24,24 @@ export default function CompleteRegister({navigation}) {
   const profile = useSelector(state => state.user.profile);
   const loading = useSelector(state => state.user.loading);
   const cards = useSelector(state => state.creditcard.cards);
-
   const initialValues = {phone: profile?.phone, cpf: profile?.cpf};
   function TestaCPF(strCPF) {
     let Soma;
     let Resto;
     Soma = 0;
-    if (strCPF == '00000000000') return false;
+    if (
+      strCPF == '00000000000' ||
+      strCPF == '11111111111' ||
+      strCPF == '22222222222' ||
+      strCPF == '33333333333' ||
+      strCPF == '44444444444' ||
+      strCPF == '55555555555' ||
+      strCPF == '66666666666' ||
+      strCPF == '77777777777' ||
+      strCPF == '99999999999' ||
+      strCPF == '88888888888'
+    )
+      return false;
 
     for (i = 1; i <= 9; i++)
       Soma += parseInt(strCPF.substring(i - 1, i)) * (11 - i);
@@ -68,7 +79,7 @@ export default function CompleteRegister({navigation}) {
             if (cards && cards.length > 0) {
               navigation.navigate('CardList');
             } else {
-              navigation.navigate('RegPaymentAddress', {goToAddress: true});
+              navigation.navigate('Plans', {checkEasy: false});
             }
           }
         }
@@ -139,7 +150,7 @@ export default function CompleteRegister({navigation}) {
               <SubmitButton
                 loading={loading}
                 onPress={() => onSubmit(values, isValid)}>
-                Completar cadastro
+                {profile.cpf && profile.phone ? 'Editar' : 'Completar cadastro'}
               </SubmitButton>
             </Form>
           )}

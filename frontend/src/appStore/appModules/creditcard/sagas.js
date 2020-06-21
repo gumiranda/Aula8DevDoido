@@ -10,7 +10,7 @@ export function* getCards() {
     } else {
       yield put(getFailure());
     }
-  } catch (err) {
+  } catch (e) {
     yield put(getFailure());
   }
 }

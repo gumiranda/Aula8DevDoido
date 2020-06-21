@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import {appColors} from '../../../utils/appColors';
-import Button from '../../../components/Button/Button';
 
 export const Title = styled.Text`
   font-size: 20px;
@@ -8,9 +7,4 @@ export const Title = styled.Text`
   font-weight: bold;
   align-self: center;
   margin-vertical: 15px;
-  margin-horizontal: 10px;
-`;
-export const SubmitButton = styled(Button)`
-  margin-horizontal: 35px;
-  border-radius: 4px;
 `;
