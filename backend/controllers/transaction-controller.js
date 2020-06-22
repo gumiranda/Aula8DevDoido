@@ -73,18 +73,19 @@ transactionController.prototype.post = async (req, res) => {
       await _repoUser.updatePayment(datav, req.usuarioLogado.user._id);
       res.status(200).send(transactionCreated);
     } else {
-      const bytes = CryptoJS.AES.decrypt(
-        data.card_hash,
-        'hdfudhuidfhudhudah9d8s8f9d8a98as9d8s9d89as',
-      );
-      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      const cardToHash = {
-        card_number: decryptedData.card_number,
-        card_holder_name: decryptedData.card_holder_name,
-        card_cvv: decryptedData.card_cvv,
-        card_expiration_date: decryptedData.card_expiration_date,
-      };
-      const cardHash = await client.security.encrypt(cardToHash);
+      // const bytes = CryptoJS.AES.decrypt(
+      //   data.card_hash,
+      //   'hdfudhuidfhudhudah9d8s8f9d8a98as9d8s9d89as',
+      // );
+      // const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // const cardToHash = {
+      //   card_number: decryptedData.card_number,
+      //   card_holder_name: decryptedData.card_holder_name,
+      //   card_cvv: decryptedData.card_cvv,
+      //   card_expiration_date: decryptedData.card_expiration_date,
+      // };
+      // const cardHash = await client.security.encrypt(cardToHash);
+      const cardHash = data.cardHash;
       const pagarmeTransaction = await client.transactions.create({
         amount: 6000,
         payment_method: 'credit_card',
