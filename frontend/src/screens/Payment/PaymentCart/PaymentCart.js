@@ -8,6 +8,7 @@ import {completeProfileRequest} from '../../../appStore/appModules/user/actions'
 import {getRequest} from '../../../appStore/appModules/creditcard/list';
 import {Container, SubmitButton, Title} from './styles';
 import Background from '../../../components/Background/Background';
+import generateCardHash from 'react-native-pagarme-card-hash';
 
 export default function PaymentCart({navigation}) {
   const dispatch = useDispatch();
@@ -19,9 +20,9 @@ export default function PaymentCart({navigation}) {
   const profile = useSelector(state => state.user.profile);
   async function handleSubmit() {
     if (isValid) {
-      let expiration = parseInt(cart.expiry.replace('/', ''));
+      let expiration = `${parseInt(cart.expiry.replace('/', ''))}`;
       if (expiration < 1000) {
-        expiration = '0' + expiration;
+        expiration = `0${expiration}`;
       }
       console.tron.log(expiration);
       const numbercart = cart.number.toString().replace(/\s+/g, '');
@@ -31,10 +32,19 @@ export default function PaymentCart({navigation}) {
         card_holder_name: cart.name,
         card_cvv: cart.cvc,
       });
-      const card_hash = CryptoJS.AES.encrypt(
-        objToEncrypt,
-        'hdfudhuidfhudhudah9d8s8f9d8a98as9d8s9d89as',
-      ).toString();
+      const cardHash = await generateCardHash(
+        {
+          number: numbercart,
+          holderName: cart.name,
+          expirationDate: expiration,
+          cvv: cart.cvc,
+        },
+        'chavePAGARME',
+      );
+      // const card_hash = CryptoJS.AES.encrypt(
+      //   objToEncrypt,
+      //   'hdfudhuidfhudhudah9d8s8f9d8a98as9d8s9d89as',
+      // ).toString();
       const state = navigation.getParam('state');
       const complemento = navigation.getParam('complemento');
       const street = navigation.getParam('street');
@@ -50,7 +60,7 @@ export default function PaymentCart({navigation}) {
         state,
         complemento,
         zipcode,
-        card_hash,
+        cardHash,
         neighborhood,
         street,
         email,
@@ -112,12 +122,12 @@ export default function PaymentCart({navigation}) {
           getForm(form);
         }}
       />
-    
+      <Container>
         <Title>Total: R${navigation.getParam('value')}</Title>
         <SubmitButton loading={loading} onPress={() => handleSubmit()}>
           Confirmar pagamento
         </SubmitButton>
-      
+      </Container>
     </Background>
   );
 }

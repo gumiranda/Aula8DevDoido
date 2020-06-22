@@ -5968,6 +5968,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+qs@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
+  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
+
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -6083,6 +6088,14 @@ react-native-neomorph-shadows@^1.1.2:
     "@react-native-community/art" "^1.2.0"
     prop-types "^15.7.2"
 
+react-native-pagarme-card-hash@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-pagarme-card-hash/-/react-native-pagarme-card-hash-0.1.1.tgz#6ada03b398a2d42009820e1f9a7dfcfe81e36c17"
+  integrity sha512-n2mIgXrBMZ7km/4CkrKiYWYgLAhyFpj8pQOqS1u4LdyMMZ5PEhpuLVOKKUlrZomHhrAJLwsr5M/6a6uiJN5rWA==
+  dependencies:
+    axios "^0.19.2"
+    qs "^6.9.4"
+
 react-native-paper@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-3.10.1.tgz#4fca72b9f154fc5ad3710d633787c55e878e8f36"
@@ -6098,6 +6111,11 @@ react-native-reanimated@^1.9.0:
   integrity sha512-Aj+spgIHRiVv7ezGADxnSH1EoKrQRD2+XaSiGY0MiB/pvRNNrZPSJ+3NVpvLwWf9lZMOP7dwqqyJIzoZgBDt8w==
   dependencies:
     fbjs "^1.0.0"
+
+react-native-rsa-native@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-rsa-native/-/react-native-rsa-native-2.0.0.tgz#0b74de1fdb9750d6d33a0366e61ea2ae60f38e93"
+  integrity sha512-pZ8DltFO13zfM9pPYe9Ca2GZSKvOQ3Ro3oR9lgzwHW7cwEFNijyWqHjGNIq0hfhRwyLsHurTgoWTe9Mm3hsWkQ==
 
 react-native-safe-area-context@^3.0.3:
   version "3.0.3"
