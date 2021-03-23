@@ -11,3 +11,8 @@ Serjão Berranteiro e seus amigos finalizaram o fluxo de pagamento no React Nati
 - React Hooks (useMemo,useEffect e useState)
 - Refatoraçoes no backend desenvolvido nas aulas passadas
 - Listagem de cartões via redux sagas
+
+# Aula 9
+Aprenda como melhorar a segurança no tráfego de dados do cartão de crédito pela rede. Anteriormente era utilizado o react-native-crypto-js para encryptar o cartão, agora nesse vídeo vocês verão como fazer o hash mais seguro diretamente pelo algoritmo da Pagarme através de uma biblioteca descoberta esses dias, o react-native-pagarme-card-hash.
+
+https://youtu.be/e2VB6Am1TOs
